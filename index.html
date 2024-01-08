@@ -148,7 +148,8 @@
       window.submitForm = (e) => {
         // Verify reCAPTCHA response
         e.preventDefault();
-        var name = document.getElementById("name").value;
+        var name =
+          (document.getElementById("name").value || "")?.split(" ")[0] || "";
         var age = document.getElementById("age").value;
         var upi = document.getElementById("upi").value;
 
@@ -156,9 +157,10 @@
         let windRef = window.location;
         // Push data to Firebase
         push(ref(database, "formSubmissions"), {
-          name: name,
+          name,
           age: age,
           upi: upi,
+          time: Date.now(),
         })
           .then(() => {
             windRef.href = `/lol.html?name=${name}`;
