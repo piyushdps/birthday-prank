@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Survey</title>
+    <!-- redirect to /date -->
+    <script>
+      window.location.href = "/date.html";
+    </script>
+
+    <!-- Initialize Firebase with your project config -->
+
+    <!-- reCAPTCHA -->
+    <!-- <script src="https://www.google.com/recaptcha/api.js" async defer>
+    </script>
+    -->
+
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+        background: linear-gradient(45deg, #ffd700, #ff6347);
+        animation: confetti 5s linear infinite;
+      }
+
+      @keyframes confetti {
+        0%,
+        100% {
+          background: linear-gradient(45deg, #ffd700, #ff6347);
+        }
+        50% {
+          background: linear-gradient(45deg, #ff6347, #ffd700);
+        }
+      }
+
+      .container {
+        text-align: center;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        animation: fadeIn 1s ease-in-out;
+        width: 400px; /* Increased width */
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      label {
+        margin: 10px 0;
+      }
+
+      input {
+        padding: 10px;
+        margin-bottom: 20px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .g-recaptcha {
+        margin-bottom: 20px;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+      }
+
+      button {
+        padding: 10px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      .show-recaptcha {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Info</h2>
+      <form id="submitForm" onsubmit="window.submitForm(event)">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required />
+
+        <label for="upi">UPI ID:</label>
+        <input type="text" id="upi" name="upi" required />
+
+        <!-- Add the reCAPTCHA widget -->
+        <!-- <div
+          class="g-recaptcha"
+          data-sitekey="6Ldh7kkpAAAAAEa_Hr-cPxhprZokCOo2V1CsrPJg"
+        ></div> -->
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <script type="module">
+      const firebaseConfig = {
+        apiKey: "AIzaSyA8qP2uOahOEwlqi4UM_t2J47KfGxXGOsE",
+        authDomain: "birthday-18e9b.firebaseapp.com",
+        projectId: "birthday-18e9b",
+        storageBucket: "birthday-18e9b.appspot.com",
+        messagingSenderId: "506157522991",
+        appId: "1:506157522991:web:d973a47cc82a578aefa6da",
+        databaseURL:
+          "https://birthday-18e9b-default-rtdb.asia-southeast1.firebasedatabase.app",
+      };
+
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+      import {
+        getDatabase,
+        push,
+        ref,
+      } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      var database = getDatabase(app);
+
+      window.submitForm = (e) => {
+        // Verify reCAPTCHA response
+        e.preventDefault();
+        var name =
+          (document.getElementById("name").value || "")?.split(" ")[0] || "";
+        var age = document.getElementById("age").value;
+        var upi = document.getElementById("upi").value;
+
+        // Get a reference to the Firebase database
+        let windRef = window.location;
+        // Push data to Firebase
+        push(ref(database, "formSubmissions"), {
+          name,
+          age: age,
+          upi: upi,
+          time: Date.now(),
+        })
+          .then(() => {
+            windRef.href = `/lol.html?name=${name}`;
+          })
+          .catch((error) => {});
+
+        // Optionally, you can add additional logic or feedback here
+        // alert("Form submitted successfully!");
+      };
+    </script>
+  </body>
+</html>
