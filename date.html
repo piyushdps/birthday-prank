@@ -64,7 +64,7 @@
     <div id="catEmoji">
       <img src="./cat.jpg" height="100px" />
     </div>
-    <div id="heartEmoji">❤️ yay ❤️</div>
+    <div id="heartEmoji">❤️ !! YAY !! ❤️</div>
     <br />
     <div id="buttons">
       <button id="yesButton" onclick="yesButton();">Yes</button>
@@ -76,7 +76,7 @@
       function change() {
         const noButton = document.getElementById("noButton");
         if (count >= 5) {
-          alert("ahh! too much of a work. disappearing the no button.");
+          alert("ahh! too much of a work. No, no button for you.");
           noButton.style.display = "none";
         }
         var i = Math.floor(Math.random() * 150) + 170;
@@ -84,6 +84,8 @@
         noButton.style.left = i + "px";
         noButton.style.top = j + "px";
         count++;
+        //focus on the button when it moves
+        noButton.scrollIntoView();
       }
       noButton.addEventListener("mouseover", change);
       noButton.addEventListener("touchstart", change);
@@ -96,7 +98,7 @@
         const yesButton = document.getElementById("yesButton");
         const noButton = document.getElementById("noButton");
 
-        header.innerHTML = "Yay! I knew you would say yes 😛";
+        header.innerHTML = "I knew you would say yes 😛";
         catEmoji.style.display = "none";
         heartEmoji.style.display = "block";
         heartEmoji.style.animation = "heart 1s ease-in-out infinite";
@@ -104,7 +106,7 @@
         noButton.style.display = "none";
         setTimeout(() => {
           alert(
-            `Great!Chalo ab jaldi se ping me 'Red hot burger' and i'll know `
+            `Such a cutie pie! Chalo ab jaldi se ping me 'Red hot burger' and i'll know `
           );
         }, 500);
       }
